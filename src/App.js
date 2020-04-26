@@ -53,7 +53,10 @@ function App() {
             All - Low
           </option>
           <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/all_med.dat">
-            All - Medium (!!!)
+            All - Medium
+          </option>
+          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/all_high.dat">
+            All - High
           </option>
         </select>
       </div>
