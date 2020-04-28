@@ -1,25 +1,38 @@
 import React, { useEffect, useState } from "react";
 
 import "./App.css";
-//import { Canvas } from "./Canvas";
 import { Canvas } from "./volume/Canvas";
 import { fromUrl } from "./volume/Texture";
 
-//import sectors_200423 from "./sectors/200423";
-//import sectors_200425 from "./sectors/200425";
-
-//import sectors from "./sectors/200425_3d_neutron_low";
-//import sectors from "./sectors/200425_3d_neutron_med";
-//import sectors from "./sectors/200425_3d_neutron_high";
-//import sectors from "./sectors/200425_3d_all_low";
-//import sectors from "./sectors/200425_3d_all_medium";
-
-//import { convert } from "./volume/convert";
+const options = [
+  {
+    value: process.env.PUBLIC_URL + "/data/all_low.dat",
+    text: "All - Low"
+  },
+  {
+    value: process.env.PUBLIC_URL + "/data/all_med.dat",
+    text: "All - Medium"
+  },
+  {
+    value: process.env.PUBLIC_URL + "/data/all_high.dat",
+    text: "All - High"
+  },
+  {
+    value: process.env.PUBLIC_URL + "/data/neutron_low.dat",
+    text: "Neutron - Low"
+  },
+  {
+    value: process.env.PUBLIC_URL + "/data/neutron_med.dat",
+    text: "Neutron - Medium"
+  },
+  {
+    value: process.env.PUBLIC_URL + "/data/neutron_high.dat",
+    text: "Neutron - High"
+  }
+];
 
 function App() {
-  const [url, setUrl] = useState(
-    "https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/neutron_low.dat"
-  );
+  const [url, setUrl] = useState(options[0].value);
   const [data, setData] = useState();
   useEffect(() => {
     (async () => {
@@ -34,30 +47,18 @@ function App() {
     <div>
       <div style={{ position: "absolute", top: "5px", right: "5px" }}>
         <select
+          value={url}
           onChange={e => {
             const { value } = e.target;
             setUrl(value);
             setData(undefined);
           }}
         >
-          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/neutron_low.dat">
-            Neutron - Low
-          </option>
-          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/neutron_med.dat">
-            Neutron - Medium
-          </option>
-          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/neutron_high.dat">
-            Neutron - High
-          </option>
-          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/all_low.dat">
-            All - Low
-          </option>
-          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/all_med.dat">
-            All - Medium
-          </option>
-          <option value="https://s3-eu-west-1.amazonaws.com/s3.sandstedt.eu/react-elite-map/all_high.dat">
-            All - High
-          </option>
+          {options.map(({ value, text }) => (
+            <option key={value} value={value}>
+              {text}
+            </option>
+          ))}
         </select>
       </div>
       <div>{data && <Canvas data={data} />}</div>
